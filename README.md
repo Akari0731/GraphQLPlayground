@@ -1,2 +1,2 @@
 # QraphQLPlayground
-Playground of GraphQL
+Playground for GraphQL
