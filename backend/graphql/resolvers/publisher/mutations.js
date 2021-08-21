@@ -1,12 +1,14 @@
 import { Publisher } from '../../../db/models';
 
 const publisherMutations = {
-  createPublisher: async (_, { publisher}) => {
+  createPublisher: async (_, { publisher }, { loaders }) => {
     const newPublisher = new Publisher(publisher);
 
-    return newPublisher.save();
+    const savedPublisher = newPublisher.save();
+
+    return loaders.publisher.one(savedPublisher._id);
   },
-  updatePublisher: async (_, { id, publisher }) => {
+  updatePublisher: async (_, { id, publisher }, { loaders }) => {
     const updatedPublisher = await publisher.findByIdAndUpdate(
       id,
       {
@@ -15,7 +17,7 @@ const publisherMutations = {
       { new: true }
     );
 
-    return updatedPublisher.save();
+    return loaders.publisher.one(id);
   },
 };
 
